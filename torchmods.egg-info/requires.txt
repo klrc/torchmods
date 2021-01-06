@@ -1,0 +1,11 @@
+torch
+matplotlib
+paramiko
+opencv_python
+requests
+numpy
+torchvision
+beautifulsoup4
+imageio
+Pillow
+pynvml

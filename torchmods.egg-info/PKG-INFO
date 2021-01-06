@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: torchmods
+Version: 0.4.2
+Summary: mods for torch & cv
+Home-page: https://github.com/klrc/torchmods
+Author: klrc
+Author-email: sh@mail.ecust.edu.com
+License: MIT Licence
+Description: experimental mods for pytorch & cv research
+Keywords: cv,pytorch,auxiliary
+Platform: all
