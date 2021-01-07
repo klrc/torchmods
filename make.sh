@@ -1,3 +1,4 @@
+source activate dl
 version=`cat setup.py|grep "version="|tr -cd "[0-9]|\."`
 echo $version
 python setup.py sdist
