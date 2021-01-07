@@ -84,7 +84,7 @@ the default script are stored in torchmods/device/server.sh:
         cd ../server
     done
 
-# mods: datasets support
+### mods: datasets support
 we have API supports for datasets in CV research field, which is compatible with original pytorch, sample code:
 
     # download not supported yet, baidu netdisk sucks :(
@@ -109,7 +109,7 @@ debugging and evaluation are as simple:
     env.check(model, optimizer)
     env.eval(model)
 
-# mods: mods.nn support
+### mods: mods.nn support
 we add a few things to `torch.nn` such as CanberLoss (fully compatible with origin pytorch):
 
     # import torch.nn as nn
@@ -120,7 +120,7 @@ we add a few things to `torch.nn` such as CanberLoss (fully compatible with orig
     target = torch.rand(4, 1, 30, 40).cuda()
     print(loss(x, target))
 
-# mods: visualize support
+### mods: visualize support
 supports for tensor-to-numpy convertion or visualization.
 
 - denormalize(tensor)
