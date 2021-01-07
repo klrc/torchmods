@@ -73,8 +73,3 @@ def test_connection():
         print(e)
         print(f' response:\tconnection fail')
         return False
-
-
-if __name__ == "__main__":
-    for x in login('Y30180726', 'elpsycongroo0'):
-        print(x)

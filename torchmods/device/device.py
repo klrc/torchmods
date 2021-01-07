@@ -146,14 +146,14 @@ class Device(_DeviceEnvironmentBlock):
         tar = f'{self.path()}/{tar_name}.tar.bz2'
         return tar
 
-    def put(self, tid, source, ignore=None):
+    def push(self, tid, source, ignore=None):
         tar = self.build(tid, source, ignore=None)
         self.io.push(tar)
         self.core.wake()
         os.system('rm ' + tar)
         return self
 
-    def get(self):
+    def pull(self):
         self.io.pull()
         return self
 
@@ -162,5 +162,5 @@ class Device(_DeviceEnvironmentBlock):
         return
 
 
-def mount(key, root):
+def connect(key, root):
     return Device(key, root)

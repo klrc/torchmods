@@ -1,1 +1,1 @@
-from .device import Device, mount
+from .device import Device, connect
