@@ -71,8 +71,3 @@ def keygen(ip_address, user, password, port=22):
 
 def open(key):
     return Tunnel(key)
-
-
-if __name__ == "__main__":
-    with open('MTcyLjIwLjQ2LjIzNSQyMiRzaCRzaA==') as f:
-        print(f.cd('clones').call('ls'))

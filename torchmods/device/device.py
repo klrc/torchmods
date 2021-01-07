@@ -1,5 +1,7 @@
 import os
 
+from torchmods.utils import bz2
+
 from . import ssh
 
 
@@ -33,9 +35,14 @@ class _DeviceEnvironmentBlock(_DeviceInterface):
 
     def __init__(self, key, root):
         super().__init__(key)
-        with ssh.open(key) as f:
-            f.call(f'[ -d {root} ] || mkdir {root}')
         self.__root = root
+        self.__key = key
+        self.create_dir(root)
+
+    def create_dir(self, dir):
+        with ssh.open(self.__key) as f:
+            f.call(f'[ -d {dir} ] || mkdir {dir}')
+        return self
 
     def exec_command(self, cmd):
         return super().exec_command(self.__root, cmd)
@@ -98,11 +105,17 @@ class _BackServer():
     """
 
     def __init__(self, key, root, server_script=None):
-        self.__core = _DeviceEnvironmentBlock(key, root + '/server')
+        self.__key = key
+        self.__root = root + '/server'
+        self.__core = _DeviceEnvironmentBlock(self.__key,  self.__root)
+        self.__vm = _DeviceEnvironmentBlock(self.__key, root + '/vm')
         self.server_script = server_script
 
     def awake(self):
-        return bool(self.__core.cat1stline('awake'))
+        with ssh.open(self.__key) as f:
+            f.call(f'[ -f {self.__root}/awake ] || echo False>{self.__root}/awake')
+        flag = (self.__core.cat1stline('awake') == 'True')
+        return flag
 
     def wake(self):
         if self.awake():
@@ -110,7 +123,7 @@ class _BackServer():
         if self.server_script is None:
             path = self.default_server_script()
         self.__core.push(path)
-        self.__core.exec_command('source server.sh > history')
+        self.__core.exec_command('chmod +x ./server.sh;nohup ./server.sh>>history 2>&1 & echo $!>server_pid')
 
     def default_server_script(self):
         return os.path.dirname(os.path.abspath(__file__)) + '/server.sh'
@@ -118,7 +131,7 @@ class _BackServer():
 
 class Device(_DeviceEnvironmentBlock):
     """ Consider remote CUDA server as just DEVICE.
-        push task, wait for output.
+        put task, get processed.
         maybe check the status?
         we dont need anything else actually.
     """
@@ -128,13 +141,19 @@ class Device(_DeviceEnvironmentBlock):
         self.io = _IOCache(key, root)
         self.core = _BackServer(key, root)
 
-    def push(self, tid, source):
-        tar = self.build(tid, source)
+    def build(self, tid, source, ignore):
+        tar_name = bz2.compress(source, self.path(), tid, ignore)
+        tar = f'{self.path()}/{tar_name}.tar.bz2'
+        return tar
+
+    def put(self, tid, source, ignore=None):
+        tar = self.build(tid, source, ignore=None)
         self.io.push(tar)
         self.core.wake()
+        os.system('rm ' + tar)
         return self
 
-    def pull(self):
+    def get(self):
         self.io.pull()
         return self
 
