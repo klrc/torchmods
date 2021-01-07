@@ -1,2 +1,4 @@
 ## install
-```pip install torchmods -U -i https://pypi.org/simple```
+```
+pip install torchmods -U -i https://pypi.org/simple
+```
