@@ -1,14 +1,19 @@
 # Torchmods Supports Pack for Pytorch
 ## Getting Started
 ### installation
+```shell
     pip install torchmods -U -i https://pypi.org/simple
+```
 
 ### use torchmods
+```python
     import torchmods as mods
+```
 
 #### mods: ssh support
 torchmods have some simple ssh control module, to use it:
 
+```python
     # generate your key & keep it.
     key = mods.ssh.keygen('your_server_ip', 'username', 'password')
     print(key)
@@ -19,31 +24,39 @@ torchmods have some simple ssh control module, to use it:
         f.upload('sample.txt', './Desktop/sample_copy.txt')  # sftp upload
         f.cd('./Desktop')                                    # global change-dir operation
         f.download('sample_copy.txt', 'sample_copy.txt')     # sftp download
+```
 
 #### mods: device control support
 with torchmods, a remote server can be virtualized as a device with `device.push()`:
 
+```python
     # connect to remote device
     device = mods.Device(key, 'your_root')
 
     # push task to your device
     device.push('your/task/dir')
+```
 
 everything is done, you are free to leave or push anything later.
 
 you can check the status with `device.check_something()`(NOT implemented now):
 
+```python
     # not implemented yet
     device.check_something()
+```
 
 all tasks are executed and packed in the `/output` dir, you can pull it with `device.pull()`
 
 to specify conda environment, running args, task control or anything else, you can just customize the core script:
 
+```python
     device.core.server_script = './myscript.sh'
+```
 
 the default script are stored in torchmods/device/server.sh:
 
+```shell
     #!/bin/sh
 
     ######################################
@@ -83,10 +96,12 @@ the default script are stored in torchmods/device/server.sh:
         # recover dir
         cd ../server
     done
+```
 
 #### mods: datasets support
 we have API supports for datasets in CV research field, which is compatible with original pytorch, sample code:
 
+```python
     # download not supported yet, baidu netdisk sucks :(
     train_dataset = mods.datasets.LDL(your_root, train=True)
     test_dataset = mods.datasets.LDL(your_root, train=False)
@@ -95,23 +110,29 @@ we have API supports for datasets in CV research field, which is compatible with
     trainloader = Dataloader(train_dataset, batch_size=16)
     testloader = Dataloader(test_dataset, batch_size=16)
     ...
+```
 
 or one-line-training with our full API, we offer everything even including standard loss, its just too lazy.
 
+```python
     from torchvision.models import resnet50
     env = EnvLDL()
     model = resnet50().cuda()
     optimizer = torch.optim.SGD(model.parameters(), lr=1e-4)
     env.train(model, optimizer)
+```
 
 debugging and evaluation are as simple:
 
+```python
     env.check(model, optimizer)
     env.eval(model)
+```
 
 #### mods: mods.nn support
 we add a few things to `torch.nn` such as CanberLoss (fully compatible with origin pytorch):
 
+```python
     # import torch.nn as nn
     import mods.nn as nn
 
@@ -119,6 +140,7 @@ we add a few things to `torch.nn` such as CanberLoss (fully compatible with orig
     x = torch.rand(4, 1, 30, 40).cuda()
     target = torch.rand(4, 1, 30, 40).cuda()
     print(loss(x, target))
+```
 
 #### mods: visualize support
 supports for tensor-to-numpy convertion or visualization.
