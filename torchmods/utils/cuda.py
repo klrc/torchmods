@@ -1,7 +1,7 @@
 import pynvml
 
 
-def state(index=0):
+def gpu_stat(index=0):
     pynvml.nvmlInit()
     handle = pynvml.nvmlDeviceGetHandleByIndex(index)  # 0表示显卡标号
     meminfo = pynvml.nvmlDeviceGetMemoryInfo(handle)
