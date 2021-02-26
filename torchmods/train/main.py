@@ -1,15 +1,11 @@
 import torch
+import torch.nn as nn
 import torch.optim as optim
 import torchvision
 import torchvision.transforms.transforms as A
-import torch.nn as nn
 from tqdm import tqdm
-from .utils import (
-    save_checkpoint,
-    load_checkpoint,
-    get_loaders,
-    check_loss,
-)
+
+from .utils import check_loss, get_loaders, load_checkpoint, save_checkpoint
 
 
 class Parameters():
@@ -68,7 +64,7 @@ def train_fn(loader, model, optimizer, loss_fn, scaler, device):
         loop.set_postfix(loss=loss.item())
 
 
-def train(model, checkpoint=None):
+def main(model, checkpoint=None):
 
     if Parameters.device_id is not None:
         torch.cuda.set_device(Parameters.device_id)

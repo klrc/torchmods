@@ -5,6 +5,7 @@ torchmods.egg-info/SOURCES.txt
 torchmods.egg-info/dependency_links.txt
 torchmods.egg-info/requires.txt
 torchmods.egg-info/top_level.txt
+torchmods/datasets/__init__.py
 torchmods/datasets/flickr_ldl.py
 torchmods/datasets/salicon.py
 torchmods/nn/__init__.py

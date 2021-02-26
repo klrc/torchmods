@@ -9,8 +9,4 @@ from .spatial_softmax2d import SpatialSoftmax2d
 from .input_mask import InputMask
 
 from .denormalize import denormalize
-from .heatmap import (
-    heatmap,
-    heatmap_numpy,
-)
-
+from .heatmap import heatmap, heatmap_numpy
