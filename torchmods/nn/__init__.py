@@ -1,3 +1,5 @@
+from torch.nn import *
+
 from .accuracy import Accuracy
 from .canber import CanberLoss
 from .chebyshev import ChebyshevLoss

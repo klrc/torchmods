@@ -39,13 +39,7 @@ def check_loss(dataloader, model, loss_fn, device):
     return loss
 
 
-def get_loaders(dataset_cls, dataset_root, batch_size, train_transform, val_transform, num_workers, pin_memory):
-
-    trainset = dataset_cls(
-        root=dataset_root,
-        train=True,
-        transforms=train_transform
-    )
+def get_loaders(trainset, valset, batch_size, num_workers, pin_memory):
 
     trainloader = DataLoader(
         dataset=trainset,
@@ -53,12 +47,6 @@ def get_loaders(dataset_cls, dataset_root, batch_size, train_transform, val_tran
         shuffle=True,
         num_workers=num_workers,
         pin_memory=pin_memory,
-    )
-
-    valset = dataset_cls(
-        root=dataset_root,
-        train=False,
-        transforms=val_transform
     )
 
     valloader = DataLoader(

@@ -14,5 +14,5 @@ def heatmap_numpy(tensor, colormap=cv2.COLORMAP_JET):
 def heatmap(tensor, colormap=cv2.COLORMAP_JET):
     ndarr = heatmap_numpy(tensor, colormap)
     tensor = torch.from_numpy(ndarr)
-    tensor = tensor.permute(2, 0, 1).unsqueeze(0)
+    tensor = tensor.permute(2, 0, 1).unsqueeze(0)/255.
     return tensor

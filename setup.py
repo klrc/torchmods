@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="torchmods",
-    version="0.5.1",
+    version="0.5.20",
     keywords=("cv", "pytorch", "auxiliary"),
     description="mods for torch & cv",
     long_description="experimental mods for pytorch & cv research",
